@@ -20,11 +20,9 @@ public class Booking extends BaseEntity{
     @Column(nullable = false,unique = true)
     private String bookingCode;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id",nullable = false)
-//    private User user;
-    @Column(name = "user_id")
-    private Long userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id",nullable = false)
+    private User user;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tour_schedule_id",nullable = false)
     private TourSchedule tourSchedule;
