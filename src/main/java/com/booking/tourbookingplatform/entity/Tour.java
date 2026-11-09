@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Tour extends BaseEntity{
+public class Tour extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,8 +25,8 @@ public class Tour extends BaseEntity{
 
     private String tourType;
     private String departureLocation;
-    private String durationDays;
-    private String durationNights;
+    private Integer durationDays;
+    private Integer durationNights;
     private BigDecimal basePrice;
     private String status;
 

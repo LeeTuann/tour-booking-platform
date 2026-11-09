@@ -1,37 +1,27 @@
 package com.booking.tourbookingplatform.entity;
 
-
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.math.BigDecimal;
+import java.time.Instant;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-public class BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(nullable = false)
-    private String title;
-    @Column(nullable = false, unique = true)
-    private String slug;
-    @Column(columnDefinition = "TEXT")
-    private String description;
-    private String tourType;
-    private String departureLocation;
-    private String durationDays;
-    private String durationNights;
-    private BigDecimal basePrice;
-    private String status;
+public abstract class BaseEntity {
 
-    @Column(columnDefinition = "TEXT")
-    private String inclusions;
-    @Column(columnDefinition = "TEXT")
-    private String exclusions;
+    @CreatedDate
+    @Column(name = "created_at", updatable = false)
+    private Instant createdAt;
 
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private Instant updatedAt;
 }

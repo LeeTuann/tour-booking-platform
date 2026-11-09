@@ -29,7 +29,7 @@ public class AuthServiceImpl implements AuthService {
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        User user = userRepository.findByEmailorPhone(loginRequest.identifier(),loginRequest.identifier())
+        User user = userRepository.findByEmailOrPhone(loginRequest.identifier(), loginRequest.identifier())
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
 
         String token = jwtTokenProvider.generateToken(user.getEmail());
