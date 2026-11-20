@@ -13,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,6 +22,7 @@ public class AuthServiceImpl implements AuthService {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public AuthResponse login(LoginRequest loginRequest) {
@@ -34,6 +36,19 @@ public class AuthServiceImpl implements AuthService {
 
         String token = jwtTokenProvider.generateToken(user.getEmail());
 
+        return new AuthResponse(token, user.getEmail(), user.getRole());
+    }
+    @Override
+    public AuthResponse register(com.booking.tourbookingplatform.dto.request.RegisterRequest registerRequest) {
+        User user = User.builder()
+                .email(registerRequest.email())
+                .password(passwordEncoder.encode(registerRequest.password()))
+                .phone(registerRequest.phone())
+                .role("USER")
+                .status("ACTIVE")
+                .build();
+        userRepository.save(user);
+        String token = jwtTokenProvider.generateToken(user.getEmail());
         return new AuthResponse(token, user.getEmail(), user.getRole());
     }
 }

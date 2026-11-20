@@ -1,6 +1,7 @@
 package com.booking.tourbookingplatform.controller;
 
 import com.booking.tourbookingplatform.dto.request.LoginRequest;
+import com.booking.tourbookingplatform.dto.request.RegisterRequest;
 import com.booking.tourbookingplatform.dto.response.ApiResponse;
 import com.booking.tourbookingplatform.dto.response.AuthResponse;
 import com.booking.tourbookingplatform.service.AuthService;
@@ -22,5 +23,10 @@ public class AuthController {
     {
         AuthResponse authResponse = authService.login(loginRequest);
         return ResponseEntity.ok(ApiResponse.success(authResponse, "Đăng nhập thành công"));
+    }
+    @PostMapping("/register")
+    public ResponseEntity<ApiResponse<AuthResponse>> register (@Valid @RequestBody RegisterRequest registerRequest) {
+        AuthResponse response = authService.register(registerRequest);
+        return ResponseEntity.ok(ApiResponse.success(response,"Đăng ký thành công"));
     }
 }
